@@ -29,44 +29,35 @@ const aboutImages = [
 
 export default function StorySection() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % aboutImages.length);
-  }, []);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + aboutImages.length) % aboutImages.length);
-  }, []);
-
-  // Auto-slide effect every 4 seconds
+  // Auto-slide effect every 4.5 seconds with silky smooth transitions
   useEffect(() => {
-    if (isPaused) return;
     const timer = setInterval(() => {
-      nextSlide();
-    }, 4000);
+      setCurrentIndex((prev) => (prev + 1) % aboutImages.length);
+    }, 4500);
     return () => clearInterval(timer);
-  }, [isPaused, nextSlide]);
+  }, []);
 
   return (
     <section id="story" className="py-28 lg:py-36 bg-[var(--color-ivory-200)] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Image Slider Side */}
+          {/* Smooth Auto-Crossfade Image Side */}
           <ScrollReveal direction="right" duration={900} className="relative">
-            <div
-              className="relative aspect-[4/5] overflow-hidden rounded-sm shadow-2xl bg-[var(--color-charcoal-900)] group"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-            >
-              {/* Stacked Images for Smooth Crossfade & Ken-Burns Zoom */}
+            <div className="relative aspect-[4/5] overflow-hidden rounded-sm shadow-2xl bg-[var(--color-charcoal-900)]">
+              {/* Stacked Images for Silky Smooth Crossfade & Ken-Burns Zoom */}
               {aboutImages.map((img, idx) => {
                 const isActive = idx === currentIndex;
                 return (
                   <div
                     key={img.src}
-                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                      isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+                    style={{
+                      transitionProperty: "opacity, transform",
+                      transitionDuration: "1400ms, 8000ms",
+                      transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1), ease-out",
+                    }}
+                    className={`absolute inset-0 ${
+                      isActive ? "opacity-100 z-10 scale-105" : "opacity-0 z-0 pointer-events-none scale-100"
                     }`}
                   >
                     <Image
@@ -75,59 +66,34 @@ export default function StorySection() {
                       fill
                       priority={idx === 0}
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      className={`object-cover object-center transition-transform duration-[6000ms] ease-out ${
-                        isActive ? "scale-105" : "scale-100"
-                      }`}
+                      className="object-cover object-center"
                     />
-                    {/* Subtle gradient overlay at bottom for controls visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal-950)]/60 via-transparent to-transparent opacity-80" />
+                    {/* Subtle gradient overlay at bottom for delicate contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal-950)]/50 via-transparent to-transparent pointer-events-none" />
                   </div>
                 );
               })}
 
-              {/* Prev / Next Controls (Appear on hover) */}
-              <button
-                onClick={prevSlide}
-                aria-label="Previous slide"
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[var(--color-charcoal-950)]/50 backdrop-blur-md border border-[var(--color-gold-400)]/40 text-[var(--color-ivory-100)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[var(--color-gold-500)] hover:text-[var(--color-charcoal-950)] hover:scale-110"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg>
-              </button>
-
-              <button
-                onClick={nextSlide}
-                aria-label="Next slide"
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[var(--color-charcoal-950)]/50 backdrop-blur-md border border-[var(--color-gold-400)]/40 text-[var(--color-ivory-100)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[var(--color-gold-500)] hover:text-[var(--color-charcoal-950)] hover:scale-110"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                </svg>
-              </button>
-
-              {/* Slide Counter Badge */}
-              <div className="absolute top-4 right-4 z-20 bg-[var(--color-charcoal-950)]/60 backdrop-blur-md border border-[var(--color-gold-400)]/30 px-3 py-1 rounded-full text-[0.65rem] text-[var(--color-gold-300)] tracking-[0.2em] font-medium">
-                0{currentIndex + 1} / 0{aboutImages.length}
-              </div>
-
-              {/* Bottom Indicators & Caption */}
-              <div className="absolute bottom-4 left-5 right-5 z-20 flex items-center justify-between">
-                <span className="text-xs text-[var(--color-ivory-200)] font-light tracking-wide drop-shadow-md" style={{ fontFamily: "var(--font-cormorant), serif" }}>
+              {/* Minimal Bottom Indicators & Caption */}
+              <div className="absolute bottom-5 left-6 right-6 z-20 flex items-center justify-between pointer-events-none">
+                <span
+                  className="text-xs text-[var(--color-ivory-200)] font-light tracking-wider drop-shadow-md transition-opacity duration-700"
+                  style={{ fontFamily: "var(--font-cormorant), serif" }}
+                >
                   {aboutImages[currentIndex].caption}
                 </span>
 
-                {/* Dots / Lines */}
-                <div className="flex items-center gap-2">
+                {/* Delicate Gold Indicator Bars */}
+                <div className="flex items-center gap-1.5 pointer-events-auto">
                   {aboutImages.map((_, dotIdx) => (
                     <button
                       key={dotIdx}
                       onClick={() => setCurrentIndex(dotIdx)}
-                      aria-label={`Go to slide ${dotIdx + 1}`}
-                      className={`h-1.5 transition-all duration-500 rounded-full ${
+                      aria-label={`Lihat foto ${dotIdx + 1}`}
+                      className={`h-1 transition-all duration-700 rounded-full ${
                         dotIdx === currentIndex
-                          ? "w-6 bg-[var(--color-gold-400)] shadow-[0_0_8px_rgba(224,188,88,0.6)]"
-                          : "w-2 bg-[var(--color-ivory-100)]/40 hover:bg-[var(--color-ivory-100)]/70"
+                          ? "w-7 bg-[var(--color-gold-400)] shadow-[0_0_10px_rgba(224,188,88,0.7)]"
+                          : "w-2 bg-[var(--color-ivory-100)]/30 hover:bg-[var(--color-ivory-100)]/60"
                       }`}
                     />
                   ))}
@@ -136,8 +102,8 @@ export default function StorySection() {
             </div>
 
             {/* Gold border accents with subtle hover */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 border border-[var(--color-gold-400)]/40 pointer-events-none transition-transform duration-700 hover:scale-110" />
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-[var(--color-gold-400)]/40 pointer-events-none transition-transform duration-700 hover:scale-110" />
+            <div className="absolute -top-4 -left-4 w-24 h-24 border border-[var(--color-gold-400)]/40 pointer-events-none transition-transform duration-700 hover:scale-105" />
+            <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-[var(--color-gold-400)]/40 pointer-events-none transition-transform duration-700 hover:scale-105" />
           </ScrollReveal>
 
           {/* Text Side */}
