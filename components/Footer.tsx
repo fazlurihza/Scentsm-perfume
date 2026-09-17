@@ -186,23 +186,10 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-[var(--color-charcoal-800)]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6 flex items-center justify-center text-center">
           <p className="text-[var(--color-charcoal-500)] text-[0.65rem] tracking-wide">
             © {new Date().getFullYear()} Scentsm Bespoke Parfumerie. All rights reserved.
           </p>
-          <div className="flex gap-8">
-            {["Kebijakan Privasi", "Syarat & Ketentuan", "Panduan Konsultasi"].map(
-              (item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="text-[var(--color-charcoal-500)] hover:text-[var(--color-gold-400)] text-[0.65rem] tracking-wide transition-colors duration-300"
-                >
-                  {item}
-                </a>
-              )
-            )}
-          </div>
         </div>
       </div>
     </footer>
