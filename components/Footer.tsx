@@ -38,26 +38,6 @@ export default function Footer() {
             >
               Scentsm menghadirkan pengalaman meracik formula parfum personal yang sepenuhnya disesuaikan dengan identitas, mood, dan cerita unik dirimu.
             </p>
-
-            {/* Newsletter */}
-            <div>
-              <p className="text-[0.65rem] tracking-[0.2em] uppercase text-[var(--color-gold-300)] mb-3 font-semibold">
-                Dapatkan Info & Inspirasi Aroma
-              </p>
-              <form onSubmit={(e) => e.preventDefault()} className="flex max-w-md shadow-lg shadow-black/40">
-                <input
-                  type="email"
-                  placeholder="Masukkan alamat email kamu"
-                  className="flex-1 bg-[var(--color-charcoal-900)] border border-[var(--color-gold-400)]/30 px-4 py-3 text-xs text-[var(--color-ivory-100)] placeholder:text-[var(--color-charcoal-400)] focus:outline-none focus:border-[var(--color-gold-400)] focus:ring-1 focus:ring-[var(--color-gold-400)] transition-all duration-300"
-                />
-                <button
-                  type="submit"
-                  className="bg-gradient-to-r from-[var(--color-gold-400)] via-[var(--color-gold-300)] to-[var(--color-gold-500)] text-[var(--color-charcoal-950)] text-[0.65rem] font-bold tracking-[0.25em] uppercase px-7 transition-all duration-300 hover:brightness-110 shadow-[0_0_15px_rgba(224,188,88,0.25)]"
-                >
-                  Daftar
-                </button>
-              </form>
-            </div>
           </div>
 
           {/* Navigation Columns */}
