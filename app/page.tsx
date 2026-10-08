@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import MarqueeBanner from "@/components/MarqueeBanner";
 import ProcessSection from "@/components/ProcessSection";
 import ScentPalette from "@/components/ScentPalette";
+import ProductCatalog from "@/components/ProductCatalog";
 import StorySection from "@/components/StorySection";
 import ConsultationSection from "@/components/ConsultationSection";
 import Footer from "@/components/Footer";
@@ -25,6 +26,7 @@ export default function Home() {
         <MarqueeBanner />
         <ProcessSection />
         <ScentPalette />
+        <ProductCatalog />
         <StorySection />
         <ConsultationSection onStartConsultation={openOrder} />
       </main>
