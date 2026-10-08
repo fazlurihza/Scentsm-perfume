@@ -17,7 +17,7 @@ function ProductCard({ product }: { product: Product }) {
         {/* Front Side */}
         <div className="product-card-front">
           {product.isBestSeller && (
-            <div className="badge-bestseller">Best Seller</div>
+            <div className="badge-instock">In Stock</div>
           )}
           {product.isNew && <div className="badge-new">New Arrival</div>}
 
@@ -46,6 +46,10 @@ function ProductCard({ product }: { product: Product }) {
 
         {/* Back Side — Fragrance Pyramid */}
         <div className="product-card-back">
+          {product.isBestSeller && (
+            <div className="badge-instock">In Stock</div>
+          )}
+          {product.isNew && <div className="badge-new">New Arrival</div>}
           <div className="pyramid-header">
             <h3 className="pyramid-product-name">{product.name}</h3>
             <p className="pyramid-subtitle">Fragrance Pyramid</p>

@@ -530,11 +530,10 @@ body {
   border: 1px solid rgba(180, 155, 110, 0.2);
 }
 
-.badge-bestseller,
+.badge-instock,
 .badge-new {
   position: absolute;
   top: 16px;
-  left: 16px;
   z-index: 10;
   font-size: 10px;
   font-weight: 700;
@@ -542,9 +541,24 @@ body {
   text-transform: uppercase;
   padding: 4px 10px;
   border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(1px);
 }
 
-.badge-bestseller {
+/* Position for front side (left) */
+.product-card-front .badge-instock,
+.product-card-front .badge-new {
+  left: 16px;
+}
+
+/* Position for back side (right) */
+.product-card-back .badge-instock,
+.product-card-back .badge-new {
+  right: 16px;
+}
+
+.badge-instock {
   background: linear-gradient(135deg, #b49b6e, #d4b896);
   color: #0a0a0a;
 }
