@@ -122,6 +122,8 @@ function ProductCard({ product }: { product: Product }) {
         .product-card-wrapper {
           perspective: 1200px;
           height: 560px;
+          width: 100%;
+          max-width: 400px;
           cursor: pointer;
         }
 
