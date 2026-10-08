@@ -44,7 +44,7 @@ export const products: Product[] = [
       ],
       base: ["Sandalwood", "Clean Musk", "Cashmere Woods", "Soft Amber"],
     },
-    imagePath: "/chloris-box.png",
+    imagePath: "/chloris-box.jpg",
     isBestSeller: true,
   },
 ];
