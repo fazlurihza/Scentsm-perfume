@@ -1,134 +1,316 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { products, Product } from "@/lib/products";
 
-function ProductCard({ product }: { product: Product }) {
-  const [isFlipped, setIsFlipped] = useState(false);
-
+function ProductCard({
+  product,
+  onSelect,
+}: {
+  product: Product;
+  onSelect: (product: Product) => void;
+}) {
   return (
     <div
-      className="product-card-wrapper"
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
+      className="catalog-product-card"
+      onClick={() => onSelect(product)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect(product);
+        }
+      }}
+      aria-label={`Lihat detail produk ${product.name}`}
     >
-      <div className={`product-card-inner ${isFlipped ? "flipped" : ""}`}>
-        {/* Front Side */}
-        <div className="product-card-front">
-          {product.isBestSeller && (
-            <div className="badge-instock">In Stock</div>
-          )}
-          {product.isNew && <div className="badge-new">New Arrival</div>}
+      {/* Product Image Wrap */}
+      <div className="catalog-product-image-wrap">
+        {product.isBestSeller && (
+          <div className="catalog-badge-instock">In Stock</div>
+        )}
+        {product.isNew && <div className="catalog-badge-new">New Arrival</div>}
 
-          <div className="product-image-wrap">
-            <Image
-              src={product.imagePath}
-              alt={product.name}
-              fill
-              className="product-img"
-              sizes="(max-width: 768px) 100vw, 400px"
-            />
-            <div className="product-image-overlay" />
-          </div>
+        <Image
+          src={product.imagePath}
+          alt={product.name}
+          fill
+          className="catalog-product-img"
+          sizes="(max-width: 768px) 100vw, 400px"
+        />
 
-          <div className="product-info">
-            <p className="product-type">{product.type}</p>
-            <h3 className="product-name">{product.name}</h3>
-            <p className="product-tagline">{product.tagline}</p>
-            <div className="product-meta">
-              <span className="scent-badge">{product.scentFamily}</span>
-              <span className="size-badge">{product.size}</span>
-            </div>
-            <p className="product-hint">Hover untuk lihat piramida aroma →</p>
-          </div>
-        </div>
+        <div className="catalog-image-overlay" />
 
-        {/* Back Side — Fragrance Pyramid */}
-        <div className="product-card-back">
-          {product.isBestSeller && (
-            <div className="badge-instock">In Stock</div>
-          )}
-          {product.isNew && <div className="badge-new">New Arrival</div>}
-          <div className="pyramid-header">
-            <h3 className="pyramid-product-name">{product.name}</h3>
-            <p className="pyramid-subtitle">Fragrance Pyramid</p>
-          </div>
-
-          <div className="pyramid-layers">
-            {/* Top Notes */}
-            <div className="pyramid-layer top-layer">
-              <div className="layer-label">
-                <span className="layer-icon">🌿</span>
-                <span className="layer-name">Top Notes</span>
-              </div>
-              <div className="notes-list">
-                {product.notes.top.map((note) => (
-                  <span key={note} className="note-chip top-chip">
-                    {note}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="pyramid-divider" />
-
-            {/* Heart Notes */}
-            <div className="pyramid-layer heart-layer">
-              <div className="layer-label">
-                <span className="layer-icon">🌸</span>
-                <span className="layer-name">Heart Notes</span>
-              </div>
-              <div className="notes-list">
-                {product.notes.middle.map((note) => (
-                  <span key={note} className="note-chip heart-chip">
-                    {note}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="pyramid-divider" />
-
-            {/* Base Notes */}
-            <div className="pyramid-layer base-layer">
-              <div className="layer-label">
-                <span className="layer-icon">🪵</span>
-                <span className="layer-name">Base Notes</span>
-              </div>
-              <div className="notes-list">
-                {product.notes.base.map((note) => (
-                  <span key={note} className="note-chip base-chip">
-                    {note}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <button className="inquire-btn">
-            Tanya Harga
+        {/* Hover Hint Overlay */}
+        <div className="catalog-hover-hint">
+          <span className="catalog-hint-pill">
             <svg
-              width="16"
-              height="16"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <path d="M5 12h14M12 5l7 7-7 7" />
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              <line x1="11" y1="8" x2="11" y2="14" />
+              <line x1="8" y1="11" x2="14" y2="11" />
             </svg>
-          </button>
+            Klik untuk Detail & Aroma
+          </span>
         </div>
       </div>
 
+      {/* Product Information */}
+      <div className="catalog-product-content">
+        <p className="catalog-product-eyebrow">
+          {product.type} · {product.size}
+        </p>
+        <h3 className="catalog-product-title">{product.name}</h3>
+        <p className="catalog-product-tagline">{product.tagline}</p>
+
+        <div className="catalog-product-meta">
+          <span className="catalog-meta-badge">{product.scentFamily}</span>
+          <span className="catalog-meta-badge-size">{product.size}</span>
+        </div>
+
+        {/* Action Indicator */}
+        <div className="catalog-card-action">
+          <span>Lihat Detail & Piramida Aroma</span>
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProductModal({
+  product,
+  onClose,
+}: {
+  product: Product;
+  onClose: () => void;
+}) {
+  // Close on ESC key & lock body scroll
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [onClose]);
+
+  const waNumber = "6281234567890";
+  const waMessage = encodeURIComponent(
+    `Halo Scentsm, saya tertarik dengan parfum ${product.name} (${product.type} ${product.size}). Boleh info harga dan ketersediaannya?`
+  );
+  const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
+
+  return (
+    <div
+      className="product-modal-backdrop"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-product-title"
+    >
+      <div className="product-modal-dialog">
+        {/* Close Button */}
+        <button
+          className="product-modal-close"
+          onClick={onClose}
+          aria-label="Tutup jendela detail produk"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        <div className="product-modal-grid">
+          {/* Left Column: Enlarged Product Photo */}
+          <div className="product-modal-gallery">
+            {product.isBestSeller && (
+              <div className="catalog-badge-instock">In Stock</div>
+            )}
+            {product.isNew && (
+              <div className="catalog-badge-new">New Arrival</div>
+            )}
+
+            <Image
+              src={product.imagePath}
+              alt={product.name}
+              fill
+              className="product-modal-img"
+              sizes="(max-width: 820px) 100vw, 440px"
+              priority
+            />
+
+            <div className="product-modal-gallery-overlay" />
+          </div>
+
+          {/* Right Column: Detailed Product Info & Fragrance Pyramid */}
+          <div className="product-modal-details">
+            <div className="product-modal-header">
+              <p className="product-modal-eyebrow">
+                {product.type} · {product.size}
+              </p>
+              <h2 id="modal-product-title" className="product-modal-name">
+                {product.name}
+              </h2>
+              <p className="product-modal-tagline">{product.tagline}</p>
+
+              <div className="product-modal-badges">
+                <span className="catalog-meta-badge">
+                  🌸 {product.scentFamily}
+                </span>
+                <span className="catalog-meta-badge-size">
+                  🧴 {product.size}
+                </span>
+                <span className="catalog-meta-badge-size">
+                  ✨ Daya Tahan: 8–12 Jam
+                </span>
+              </div>
+            </div>
+
+            {/* Description / Story */}
+            <p className="product-modal-desc">{product.description}</p>
+
+            {/* Fragrance Pyramid Section */}
+            <div className="product-modal-pyramid">
+              <div className="pyramid-section-title">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <polygon points="12 2 2 22 22 22" />
+                </svg>
+                Piramida Aroma (Fragrance Pyramid)
+              </div>
+
+              <div className="pyramid-layers-list">
+                {/* Top Notes */}
+                <div className="pyramid-modal-layer top">
+                  <div className="pyramid-modal-label">
+                    <span className="layer-title">🌿 Top Notes</span>
+                    <span className="layer-timing">Kesan Pertama · 15–30 Menit</span>
+                  </div>
+                  <div className="pyramid-chips-wrap">
+                    {product.notes.top.map((note) => (
+                      <span key={note} className="pyramid-chip top-chip">
+                        {note}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Heart Notes */}
+                <div className="pyramid-modal-layer heart">
+                  <div className="pyramid-modal-label">
+                    <span className="layer-title">🌸 Heart Notes</span>
+                    <span className="layer-timing">Karakter Utama · 2–4 Jam</span>
+                  </div>
+                  <div className="pyramid-chips-wrap">
+                    {product.notes.middle.map((note) => (
+                      <span key={note} className="pyramid-chip heart-chip">
+                        {note}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Base Notes */}
+                <div className="pyramid-modal-layer base">
+                  <div className="pyramid-modal-label">
+                    <span className="layer-title">🪵 Base Notes</span>
+                    <span className="layer-timing">Aroma Penutup · 6–8+ Jam</span>
+                  </div>
+                  <div className="pyramid-chips-wrap">
+                    {product.notes.base.map((note) => (
+                      <span key={note} className="pyramid-chip base-chip">
+                        {note}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="product-modal-actions">
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="modal-wa-btn"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                </svg>
+                Tanya Harga & Pesan via WhatsApp
+              </a>
+              <button className="modal-close-btn" onClick={onClose}>
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 export default function ProductCatalog() {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
   return (
-    <section className="catalog-section">
+    <section className="catalog-section" id="katalog">
       <div className="catalog-container">
         {/* Section Header */}
         <div className="catalog-header">
@@ -145,14 +327,26 @@ export default function ProductCatalog() {
         {/* Product Grid */}
         <div className="catalog-grid">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onSelect={(p) => setSelectedProduct(p)}
+            />
           ))}
         </div>
 
         <p className="catalog-note">
-          ✦ Arahkan kursor ke kartu produk untuk melihat piramida aroma lengkap
+          ✦ Klik kartu produk untuk memperbesar dan melihat piramida aroma lengkap
         </p>
       </div>
+
+      {/* Enlarged Modal when product is selected */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
 
       <style jsx>{`
         .catalog-section {
@@ -228,17 +422,12 @@ export default function ProductCatalog() {
           justify-items: center;
         }
 
-        .catalog-grid > * {
-          width: 100%;
-          max-width: 400px;
-        }
-
         .catalog-note {
           text-align: center;
           margin-top: 40px;
           font-size: 11px;
           letter-spacing: 0.1em;
-          color: rgba(180, 155, 110, 0.4);
+          color: rgba(180, 155, 110, 0.5);
         }
       `}</style>
     </section>
