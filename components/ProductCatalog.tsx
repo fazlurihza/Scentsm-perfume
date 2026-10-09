@@ -122,7 +122,7 @@ function ProductModal({
     };
   }, [onClose]);
 
-  const waNumber = "6281234567890";
+  const waNumber = "6282148788028";
   const waMessage = encodeURIComponent(
     `Halo Scentsm, saya tertarik dengan parfum ${product.name} (${product.type} ${product.size}). Boleh info harga dan ketersediaannya?`
   );

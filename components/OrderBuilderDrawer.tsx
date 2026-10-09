@@ -107,7 +107,7 @@ Mohon info lebih lanjut mengenai harga dan estimasi pembuatan. Terima kasih!`;
   };
 
   const handleSubmit = () => {
-    const waNumber = "6281234567890"; // Ganti dengan nomor WA Scentsm
+    const waNumber = "6282148788028"; // Nomor WA resmi Scentsm
     const message = buildWhatsAppMessage();
     window.open(`https://wa.me/${waNumber}?text=${message}`, "_blank");
     setSubmitted(true);
