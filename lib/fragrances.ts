@@ -99,6 +99,86 @@ export const scentFamilies: ScentFamily[] = [
     imageUrl: "/citrus.jpg", // Assorted fresh citrus fruits & berries
     color: "#e8a020",
   },
+  {
+    id: "aquatic",
+    name: "Aquatic / Marine",
+    nameid: "Aqua & Samudra",
+    emoji: "🌊",
+    description:
+      "Kesejukan semilir angin samudra dan jernihnya percikan air laut. Memberikan kesegaran instan, ketenangan, dan kebebasan tak bertepi.",
+    exampleNotes: [
+      "Marine Accord",
+      "Sea Salt",
+      "Calone",
+      "Water Lily",
+      "Ocean Breeze",
+      "Seaweed",
+    ],
+    mood: "Oceanic · Breezy · Pure Clean",
+    imageUrl:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80", // Ocean waves
+    color: "#258ea6",
+  },
+  {
+    id: "green",
+    name: "Green",
+    nameid: "Dedaunan & Alam Hijau",
+    emoji: "🌿",
+    description:
+      "Aroma alami rumput basah berembun, dedaunan remuk, dan pucuk teh segar. Segar alami, menenangkan pikiran, dan penuh vitalitas.",
+    exampleNotes: [
+      "Crushed Leaves",
+      "Galbanum",
+      "Green Tea",
+      "Bamboo",
+      "Fig Leaf",
+      "Morning Dew",
+    ],
+    mood: "Natural · Dewy · Revitalizing",
+    imageUrl:
+      "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&q=80", // Dewy green leaves
+    color: "#3e8e58",
+  },
+  {
+    id: "powdery",
+    name: "Powdery",
+    nameid: "Lembut & Mewah (Powdery)",
+    emoji: "🪶",
+    description:
+      "Aroma sehalus beludru bak sentuhan bedak mewah, bunga iris, dan sutra. Menghadirkan kesan bersih, feminin, intim, dan kenyamanan yang berkelas.",
+    exampleNotes: [
+      "Iris / Orris",
+      "Violet Leaf",
+      "White Musk",
+      "Heliotrope",
+      "Talc Accord",
+      "Cotton Flower",
+    ],
+    mood: "Velvety · Intimate · Pure Elegance",
+    imageUrl:
+      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=800&q=80", // Soft luxury texture
+    color: "#c48ba4",
+  },
+  {
+    id: "ozonic",
+    name: "Ozonic",
+    nameid: "Udara Bersih & Embun (Ozonic)",
+    emoji: "☁️",
+    description:
+      "Aroma udara sejuk di ketinggian pegunungan dan wangi petrichor selepas hujan reda. Sangat lapang, jernih, modern, dan bernafas lega.",
+    exampleNotes: [
+      "Ozonic Accord",
+      "Petrichor (Rain)",
+      "Crisp Mountain Air",
+      "Aldehydes",
+      "Clean Linen",
+      "Cool Mist",
+    ],
+    mood: "Airy · Crisp · Atmospheric",
+    imageUrl:
+      "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=800&q=80", // Misty atmospheric clouds
+    color: "#6f9cb5",
+  },
 ];
 
 export const occasions: OccasionOption[] = [

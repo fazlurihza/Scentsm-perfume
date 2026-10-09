@@ -195,7 +195,7 @@ function ProductModal({
 
               <div className="product-modal-badges">
                 <span className="catalog-meta-badge">
-                  🌸 {product.scentFamily}
+                  {product.scentFamily}
                 </span>
                 <span className="catalog-meta-badge-size">
                   🧴 {product.size}
@@ -204,6 +204,28 @@ function ProductModal({
                   ✨ Daya Tahan: 8–12 Jam
                 </span>
               </div>
+
+              {product.accords && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "12px" }}>
+                  {product.accords.map((accord) => (
+                    <span
+                      key={accord}
+                      style={{
+                        fontSize: "11px",
+                        letterSpacing: "0.04em",
+                        padding: "4px 10px",
+                        borderRadius: "20px",
+                        background: "rgba(180, 155, 110, 0.08)",
+                        border: "1px solid rgba(180, 155, 110, 0.25)",
+                        color: "#d4b896",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {accord}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Description / Story */}
